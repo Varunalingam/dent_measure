@@ -1,0 +1,27 @@
+include: package:flutter_lints/flutter.yaml
+
+analyzer:
+  plugins:
+    - dart_code_metrics
+
+dart_code_metrics:
+  rules:
+    - avoid-commented-out-code:
+        min-lines: 1
+    - avoid-any-version
+
+linter:
+  rules:
+    prefer_single_quotes: true
+    package_names: always_lowercase
+    always_use_package_imports: true
+    always_specify_types: true
+    always_declare_return_types: true
+    require_trailing_commas: true
+    prefer_final_locals: true
+    prefer_final_parameters: true
+    prefer_const_constructors: true
+    prefer_const_literals_to_create_immutables: true
+    comment_references: true
+
+

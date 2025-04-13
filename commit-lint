@@ -1,0 +1,39 @@
+#!/bin/bash
+# This script checks the commit message format and ensures that there are no duplicate in signed-off-by lines.
+# It is intended to be used as a commit-message hook in this Git repository.
+
+# Read the commit message file from the first argument
+commit_message_file="$1"
+
+test "" = "$(grep '^Signed-off-by: ' "$commit_message_file" |
+	 sort | uniq -c | sed -e '/^[ 	]*1[ 	]/d')" || {
+	echo >&2 Duplicate Signed-off-by lines.
+	exit 1
+}
+
+commit_message_head=$(head -n 1 "$commit_message_file")
+
+regex='^(feat|fix|docs|style|refactor|test|chore|build|ci|perf|revert|init)(\([^A-Z]+\))?(!)?:([^A-Z]+)$'
+
+# Check if the commit message matches the regex
+if [[ "$commit_message_head" =~ $regex ]]; then
+  echo "..........................................................."
+  echo "Commit message is valid."
+  echo "..........................................................."
+  exit 0
+else
+  echo "..........................................................."
+  echo "Error: Invalid commit message format."
+  echo "Commit Message Head: $commit_message_head"
+  echo "..........................................................."
+  echo "Please use the conventional commit format:"
+  echo "<type>(<scope>)<[!](BREAKING CHANGE)>: <description>"
+  echo "Where <type> is one of the following: feat | fix | docs "
+  echo "| style | refactor | test | chore | build | ci | perf "
+  echo "| revert | init"
+  echo "                                                           "
+  echo "Example: feat(login): add login button"
+  echo "Example 2: feat(login)!: add oauth 2.0 support"
+  echo "..........................................................."
+  exit 1
+fi

@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- The value of the app_name string is used in the launcher icon and in the app settings. -->
+    <string name="app_name">Dent Measure</string>
+</resources>
